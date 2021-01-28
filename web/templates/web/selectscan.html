@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}
+Danbots - Select Scanner
+{% endblock %}
+
+{% block content %}
+<br>
+<h3>Select Scanner</h3>
+<br>
+<table class="table table-dark table-striped">
+    <tr><th>Serial</th><th>Name</th><th>Charge</th><th></th></tr>
+    {% for s in scannerlist %}  
+    <tr>
+        <td>{{ s.Serial }}</td>
+        <td>{{ s.Name }}</td>
+        <td>{% if s.Charge %} 
+            <meter value="{{ s.Charge }}" max="100" low="25" high="95" optimum="80" title="{{ s.Charge }}%">{{ s.Charge }}% </meter> 
+            {% endif %}
+        </td>
+        <td><a href="{% url 'scan'%}?scanner={{s.Serial}}"><button class="btn btn-info">SELECT</button></a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

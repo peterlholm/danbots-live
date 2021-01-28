@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}
+Danbots - Scanner list
+{% endblock %}
+
+{% block content %}
+<br>
+<h3>Scanner List</h3>
+<br>
+<table class="table table-dark table-striped">
+    <tr><th>Serial</th><th>Clinic</th><th>Name</th><th>Charge</th><th>Last Seen</th><th>LocalIp</th><th>RemoteIp</th><th>HWmodel</th><th>SWversion</th></tr>
+    {% for s in scannerlist %}  
+    <tr>
+        <td>{{ s.Serial }}</td>
+        <td>{{ s.Clinic_id }}</td>
+        <td>{{ s.Name }}</td>
+        <td>{% if s.Charge %} 
+            <meter value="{{ s.Charge }}" min="0" max="100" low="25" high="80" optimum="90" title="{{ s.Charge }}%">{{ s.Charge }}% </meter> 
+            {% endif %}
+        </td>
+        <td>{{ s.LastRegister|date:"SHORT_DATETIME_FORMAT" }}</td>
+        <td><a href="http://{{ s.LocalIp }}"> {{ s.LocalIp }}</a></td>
+        <td>{{ s.RemoteIp }}</td>
+        <td>{{ s.HWmodel }}</td>
+        <td>{{ s.SWversion }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

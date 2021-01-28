@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+<h2>PIC INFO</h2>
+<script type="text/javascript">
+    function UpdatePic() {
+        if (!document.images) return;
+        obj = document.getElementById('scan1');
+        console.log(obj.src);
+        //obj.src = obj.src;
+        obj.src = obj.src.split("?")[0] + '?' + Math.random();
+        //obj2 = document.getElementById('scan2');
+        //obj2.src = obj2.src.split("?")[0] + '?' + Math.random();
+        obj.onload = imgloaded;
+    }
+
+    function imgloaded() {
+        if (run) setTimeout('UpdatePic()',200);   /*time in milliseconds... same as in 'onload'*/
+    }
+
+    var run=false;
+</script>
+<p>Viser sidste billeder fra scanner </p>
+
+<div>
+{% for p in pic %}
+    <img src="{{ p }}"  height="150" alt="P" title="{{ p }}" />&nbsp;&nbsp;
+{% endfor %}
+</div>
+
+<br>
+<img id="stitch" src="{{ stitch }}"  height="300" alt="stitch" title="Dette er det stitchede billede"  />
+<br>
+<hl>
+<br>
+<div id="scanview">
+
+    <img id="scan1" src="{{ pic1_url }}"  height="300" alt="Picture 1" title="Dette er billed fra scanneren"  />
+    <img id="scan2" src="{{ pic2_url }}"  height="300" alt="Picture 2" title="Dette er andet billed fra scanneren"  />
+    {% comment %} <img id="scan2" src="{{ pic2_url }}" alt="picture 2" title="Dette er et still billede"  /> {% endcomment %}
+</div>
+<div>
+Tekst
+<br>
+{{ info }}
+</div>
+<hr />
+<p>Ved tryk på start opdateres billede løbende (ca 5 billeder pr sek)</p>
+{% comment %} <button onclick="run=true;setTimeout('UpdatePic()',1000);" class="btn btn-primary">START</button>
+&nbsp;&nbsp;
+<button onclick="run=false;" class="btn btn-secondary">STOP</button> {% endcomment %}
+
+
+{% endblock %}

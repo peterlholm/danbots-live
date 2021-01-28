@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}
+Danbots - Home
+{% endblock %}
+
+{% block content %}
+<br>
+<h3>Wellcome to Danbots tooth scanning site</h3>
+<br>
+<p>To use the site you need a DanWand © scanner</p>
+<br>
+<p>For more information visit  <a href="http://info.danbots.com">http://info.danbots.com</a></p>
+<br>
+{% if not user.is_authenticated %}
+<p>Login to start</p>
+{% endif %}
+{% endblock %}

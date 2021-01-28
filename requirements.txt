@@ -1,0 +1,14 @@
+Django>=3.1.1
+django-crispy-forms
+Pillow
+
+# graphs
+django-extensions
+#pygraphviz
+#docutils
+
+#cv2
+#opencv-phython
+opencv-contrib-python
+
+imutils

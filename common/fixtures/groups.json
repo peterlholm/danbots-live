@@ -1,0 +1,28 @@
+[
+    {
+        "model": "auth.group",
+        "pk": 1,
+        "fields": {
+            "name": "sysadm",
+            "permissions": [
+                25,
+                26,
+                28
+            ]
+        }
+    },
+    {
+        "model": "auth.group",
+        "pk": 2,
+        "fields": {
+            "name": "clinicadm",
+            "permissions": [
+                29,
+                30,
+                32
+            ]
+        }
+    }
+]
+
+

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+<div class="row justify-content-md-center">
+    <div class="col col-lg-6">
+        <h3>Opret Clinic</h3>
+        {% crispy form %}
+        <p></p>
+    </div>
+</div>
+
+
+{% endblock %}

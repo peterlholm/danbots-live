@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+<h2>Scanning</h2>
+<script type="text/javascript">
+    function UpdatePic() {
+        if (!document.images) return;
+        obj = document.getElementById('scan1');
+        console.log(obj.src);
+        //obj.src = obj.src;
+        obj.src = obj.src.split("?")[0] + '?' + Math.random();
+        //obj2 = document.getElementById('scan2');
+        //obj2.src = obj2.src.split("?")[0] + '?' + Math.random();
+        obj.onload = imgloaded;
+    }
+
+    function imgloaded() {
+        if (run) setTimeout('UpdatePic()',200);   /*time in milliseconds... same as in 'onload'*/
+    }
+
+    var run=false;
+</script>
+<p>Viser sidste billeder fra scanner </p>
+
+<div id="scanview">
+    <img id="scan1" src="{{ pic1_url }}" onload="imgloaded()" height="300" alt="Picture 1" title="Dette er billed fra scanneren"  />
+    {% comment %} <img id="scan2" src="{{ pic2_url }}" alt="picture 2" title="Dette er et still billede"  /> {% endcomment %}
+</div>
+<hr />
+<p>Ved tryk på start opdateres billede løbende (ca 5 billeder pr sek)</p>
+<button onclick="run=true;setTimeout('UpdatePic()',1000);" class="btn btn-primary">START</button>
+&nbsp;&nbsp;
+<button onclick="run=false;" class="btn btn-secondary">STOP</button>
+
+
+{% endblock %}

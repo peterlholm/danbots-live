@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="row justify-content-md-center">
+    <div class="col col-lg-6">
+        <h2>Testside for uploads af scans</h2>
+        <p>Scans sendes med POST og følgende parametre</p>
+        <ul>
+            <li>scannerid: tekstreng der er unic for scanneren</li>
+            <li>Picture: første billede</li>
+            <li>Picture: andet billede </li>
+            <li>cmd: vilkårlig andet tekst - not required</li>
+        </ul>
+        <p>Når filerne er uploadet kan man se den under menupunktet scan</p>
+    </div>
+
+    <div class="col col-lg-6">
+        <p>Her kan du uploade filer til test</p>
+
+        {% crispy pic %}
+    </div>
+
+</div>
+{% endblock %}

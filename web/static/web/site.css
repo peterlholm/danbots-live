@@ -1,0 +1,68 @@
+body {
+    color: white;
+}
+
+#header {
+    height: 80px;
+}
+
+#logo {
+    margin-top: 3px;
+    width: 75px;
+    height: 75px;
+    float: left;
+}
+
+#headtext {
+    float: left;
+    height: 75px;
+    font-size: 50px;
+    margin-top: 5px;
+    margin-left: 50px;
+}
+
+#clinicname {
+    float: right;
+    height: 75px;
+    font-size: 50px;
+    margin-top: 10px;
+    margin-left: 50px;
+}
+.masthead {
+    position: relative;
+    width: 100%;
+    height: auto;
+    min-height: 35rem;
+    /* xpadding: 15rem 0; */
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.7) 75%, #000000 100%), url("img/DW32.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: cover;
+  }
+
+.footer {
+    color: white;
+    text-align: center;   
+}
+.footer a {
+    color: white;
+}
+
+hr {
+    border-color: #bbb;
+    margin: 8px;
+}
+
+a {
+    color: lightpink ;
+}
+
+a:hover {
+    color: pink ;
+}
+
+.asteriskField {
+    color: red;
+    padding: 5px;
+}
