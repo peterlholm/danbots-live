@@ -24,7 +24,7 @@ def register(request):
         'apiurl': 'http://live.danbots.com/api/',
         'sessionid': '12345'
     }
-    
+    a = 1
     deviceid = request.GET.get('deviceid')
     charge = request.GET.get('charge')
     localip = request.GET.get('localip')

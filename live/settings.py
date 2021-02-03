@@ -136,7 +136,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'static'
 
-INTERNAL_IPS = ['127.0.0.1', '10.1.1.100']
+INTERNAL_IPS = ['127.0.0.1', '10.1.1.100', '62.116.221.102' ]
 
 MEDIA_ROOT = BASE_DIR / 'data'
 MEDIA_URL = '/data/'
