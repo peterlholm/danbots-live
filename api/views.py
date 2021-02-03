@@ -1,3 +1,4 @@
+from os import makedirs
 from datetime import datetime
 from django.shortcuts import render, redirect
 from live.settings import MEDIA_ROOT, CLINIC_PATH
@@ -85,7 +86,7 @@ def save_uploaded_file(handle, filepath):
     return
 
 @csrf_exempt
-def pic(request): 
+def sendpic(request): 
     picform = PicForm()
     mycontext = {
         'pic': picform,
@@ -93,35 +94,45 @@ def pic(request):
     }
     clinic=1
     if request.method == 'POST':
-        print('FILES: ', request.FILES)
-        print('POST', request.POST)
+        #print('FILES: ', request.FILES)
+        #print('POST', request.POST)
         picform = PicForm(request.POST, request.FILES)
         if picform.is_valid():
             FileFolder = CLINIC_PATH / str(clinic)
+            if request.POST.get('cmd')=="stitch":
+                FileFolder = FileFolder / "stitch"
+                makedirs(FileFolder, exist_ok=True)
+
             scannerid = picform.cleaned_data['scannerid']
+
             #print ("ScannerID", scannerid)
             #clinic = find_scanner_clinic(scannerid)
             #print(request.POST.get('Pic1'))
+            filelist =[]
             if request.FILES.get('Picture'):
                 pictures = request.FILES.getlist('Picture')
-                print("type", type(pictures))
-                print ('Picture', pictures)
+                #print("type", type(pictures))
+                #print ('Picture', pictures)
                 for p in pictures:
-                    print(p)
+                    #print(p)
                     filepath = FileFolder / p.name
-                    print (filepath)
+                    #print (filepath)
+                    filelist.append(filepath)
                     save_uploaded_file(p, filepath)
             for p in ['Pic1','Pic2','Pic3']:
                 if request.FILES.get(p): 
+                    filelist.append(FileFolder /request.FILES[p].name)
                     save_uploaded_file(request.FILES[p], FileFolder /request.FILES[p].name) 
             if request.POST.get('cmd')=="stitch":
                 print("Stitching.....")
-                files =[]
-                for f in request.FILES.items():
-                    #print(f[1].name)
-                    files.append(FileFolder / f[1].name)
+                #print (filelist)
+                # files =[]
+                # print (request.FILES.items())
+                # for f in request.FILES.items():
+                #     print(f[1].name)
+                #     files.append(FileFolder / f[1].name)
                 #print(type(files[0]))
-                result = stich_files(files, FileFolder / "ud.jpg")
+                result = stich_files(filelist, FileFolder / "ud.jpg")
                 import threading
 
                 # t = threading.Thread(target=long_process,
@@ -135,8 +146,8 @@ def pic(request):
             for f in request.FILES.items():
                 param += "picture=" +f[1].name + "&"
             param += 'stitch=ud.jpg'
-            url = "/pic_info/" + param
-            print(url)
+            url = "/test/pic_info/" + param
+            #print(url)
             return redirect(url)
             return JsonResponse({'result':"OK"})
         print ("not valid", picform.errors)
