@@ -152,12 +152,12 @@ def pic_info(request):
     pic=[]
     for p in pictures:
         pic.append(CLINIC_URL +"1/" + p)
-    stich = CLINIC_URL + "1/" + request.GET.get('stitch')
+    stitch = CLINIC_URL + "1/" + request.GET.get('stitch')
      
     exif = get_pic_info("1/file1.jpg")
     mycontext = { **tmycontext,
             'pic' : pic,
-            'stitch' : stich,
+            'stitch' : stitch,
             'pic1_url': CLINIC_URL + '1/file1.jpg',
             'pic2_url': CLINIC_URL + '1/file2.jpg',
             'info' : exif

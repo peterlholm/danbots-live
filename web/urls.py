@@ -8,6 +8,6 @@ urlpatterns = [
     path("scan/", views.scan, name="scan"),
     path("results/", views.results, name="results"),
     path("scannerlist/", views.scanner_list, name="scannerlist"),
-    path("pic_info/", views.pic_info, name="pic_info"),
+    #path("pic_info/", views.pic_info, name="pic_info"),
     path("help/", views.help)
 ]

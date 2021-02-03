@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'common',
     'web',
     'api',
+    'test',
     'django_extensions',  # generate db graphs
     'django.contrib.admindocs',
 ]
