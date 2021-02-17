@@ -1,64 +1,43 @@
-from os import makedirs
-from datetime import datetime
+""" Views for the API module """
+import os
+#from datetime import datetime
+from django.utils import timezone
 from django.shortcuts import render, redirect
-from live.settings import MEDIA_ROOT, CLINIC_PATH
-from lib.stitch_pic import stich_files
-
-# Create your views here.
-
-#import os 
-from django.shortcuts import render
-from django.views.decorators.csrf import csrf_exempt
-#from scan_project.models import Scanner
-
-# Create your views here.
 from django.http import HttpResponse, JsonResponse
-from .forms import PicForm
-# from web.config import APP_NAME
+from django.views.decorators.csrf import csrf_exempt
 from common.models import Scanner
-# from scan_project.settings import MEDIA_ROOT
+from live.settings import CLINIC_PATH #MEDIA_ROOT, 
+from lib.stitch_pic import stich_files
+from .forms import PicForm
 
+# pylint: disable=old-division
 
 def register(request):
     RESPONSE = {
-        'apiurl': 'http://live.danbots.com/api/',
+        #'apiurl': 'http://live.danbots.com/api/',
         'sessionid': '12345'
     }
-    a = 1
     deviceid = request.GET.get('deviceid')
     charge = request.GET.get('charge')
     localip = request.GET.get('localip')
     hwmodel = request.GET.get('hwmodel')
     swversion = request.GET.get('swversion')
     remoteip = request.META['REMOTE_ADDR']
-    print("DeviceID", deviceid)
-    print("charge", charge)
+    print (timezone.now())
     if deviceid != None:
         try:
             scanner = Scanner.objects.get(Serial=deviceid)
-            pass
         except Scanner.DoesNotExist:
             # create new record
-            scanner = Scanner(Serial=deviceid,Clinic=None, Charge=charge, LastRegister=datetime.now(),RemoteIp=remoteip, LocalIp=localip)
-            #scanner.save()
-            #Charge=charge
+            scanner = Scanner(Serial=deviceid,Clinic=None, Charge=charge, LastRegister=timezone.now(),RemoteIp=remoteip, LocalIp=localip)
         else:
-            scanner.LastRegister = datetime.now()
+            scanner.LastRegister = timezone.now()
             scanner.Charge = charge
             scanner.RemoteIp = remoteip
             scanner.LocalIp = localip
         scanner.HWmodel=hwmodel
         scanner.SWversion=swversion    
         scanner.save()
-
-        # print(scanner)
-        # print(scanner.Clinic)
-        # print(scanner.Clinic.ClinicName)
-        # jresponse = {
-        #     **RESPONSE,
-        #     'clinicname': scanner.Clinic.ClinicName,
-        #     'clinicno': scanner.Clinic.ClinicNo,
-        #     }
         jresponse = {
             **RESPONSE,
             'clinicname': "peters klinik",
@@ -73,13 +52,7 @@ def register(request):
         }        
     return JsonResponse(jresponse)
 
-# def find_scanner_clinic(scannerid):
-#     print('Scannerid:',scannerid)
-#     return 1
-
 def save_uploaded_file(handle, filepath):
-    #print ('Handle: ', handle)
-    #print ('Filename', filepath)
     with open(filepath, 'wb+') as destination:
         for chunk in handle.chunks():
             destination.write(chunk)
@@ -101,40 +74,28 @@ def sendpic(request):
             FileFolder = CLINIC_PATH / str(clinic)
             if request.POST.get('cmd')=="stitch":
                 FileFolder = FileFolder / "stitch"
-                makedirs(FileFolder, exist_ok=True)
+                os.makedirs(FileFolder, exist_ok=True)
 
-            scannerid = picform.cleaned_data['scannerid']
-
-            #print ("ScannerID", scannerid)
+            scannerid = picform.cleaned_data['deviceid']
+            print ("ScannerID", scannerid)
             #clinic = find_scanner_clinic(scannerid)
             #print(request.POST.get('Pic1'))
             filelist =[]
             if request.FILES.get('Picture'):
                 pictures = request.FILES.getlist('Picture')
-                #print("type", type(pictures))
-                #print ('Picture', pictures)
                 for p in pictures:
-                    #print(p)
                     filepath = FileFolder / p.name
-                    #print (filepath)
                     filelist.append(filepath)
                     save_uploaded_file(p, filepath)
+            # for debug
             for p in ['Pic1','Pic2','Pic3']:
                 if request.FILES.get(p): 
-                    filelist.append(FileFolder /request.FILES[p].name)
-                    save_uploaded_file(request.FILES[p], FileFolder /request.FILES[p].name) 
+                    filelist.append(FileFolder / request.FILES[p].name)
+                    save_uploaded_file(request.FILES[p], FileFolder / request.FILES[p].name) 
             if request.POST.get('cmd')=="stitch":
                 print("Stitching.....")
-                #print (filelist)
-                # files =[]
-                # print (request.FILES.items())
-                # for f in request.FILES.items():
-                #     print(f[1].name)
-                #     files.append(FileFolder / f[1].name)
-                #print(type(files[0]))
                 result = stich_files(filelist, FileFolder / "ud.jpg")
-                import threading
-
+                #import threading
                 # t = threading.Thread(target=long_process,
                 #                             args=args,
                 #                             kwargs=kwargs)
@@ -142,14 +103,17 @@ def sendpic(request):
                 # t.start()
                 # return HttpResponse()
                 print("Stiching result", result)
-            param = "?"
-            for f in request.FILES.items():
-                param += "picture=" +f[1].name + "&"
-            param += 'stitch=ud.jpg'
-            url = "/test/pic_info/" + param
-            #print(url)
-            return redirect(url)
-            return JsonResponse({'result':"OK"})
+            if request.FILES.get('Pic1'):
+                # debug
+                param = "?"
+                for f in request.FILES.items():
+                    param += "picture=" +f[1].name + "&"
+                param += 'stitch=ud.jpg'
+                url = "/test/pic_info/" + param
+                #print(url)
+                return redirect(url)
+            else:
+                return JsonResponse({'result':"OK"})
         print ("not valid", picform.errors)
         return render(request, 'api/pic.html', mycontext)
     return render(request, 'api/pic.html', mycontext)

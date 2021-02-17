@@ -3,47 +3,68 @@ from datetime import datetime
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.contrib.auth.decorators import permission_required, login_required
-from common.models import Scanner
+from django.contrib.auth.decorators import  login_required  # permission_required,
+from common.models import Scanner, Clinic
 from live.settings import CLINIC_PATH, CLINIC_URL
 
 # Create your views here.
 
-from django.http import HttpResponse, HttpResponseForbidden
+from django.http import HttpResponse #, HttpResponseForbidden
 
 CONTEXT = {
             'clinic_name': "",
+            'date': datetime.now()
         }
 
-def init_clinic(request):
+def init_clinic1(request):
     """Init the clinic session variables"""
-    if request.session.get('clinicno') == None:
-        print ("not init")
+    if request.session.get('clinic_no') == None:
+        print ("Putting in clinic 1")
 
-        request.session['clinicno'] = 1
+        request.session['clinic_no'] = 1
         request.session['clinicname'] = "klinik navn"
     else:
-        request.session['clinicno'] = 1
+        request.session['clinic_no'] = 1
         request.session['clinicname'] = "klinik admin"
 
         # init clinic
         # try:
-        #     clinicno = request.user.user2clinic.clinic
+        #     clinic_no = request.user.user2clinic.clinic
         # except ObjectDoesNotExist:
         #     print ('Not a registeret user')
-        #     clinicno=1
-        # clinic_name = Clinic.objects.get(ClinicNo=clinicno).ClinicName
-        # request.session['clinicno'] = clinicno
+        #     clinic_no=1
+        # clinic_name = Clinic.objects.get(clinic_no=clinic_no).ClinicName
+        # request.session['clinic_no'] = clinic_no
         # request.session['clinic_name'] = clinic_name
         # print('init_clinic', clinic_name)
-    #print ("clinicno", request.session.get('clinicno'))
+    #print ("clinic_no", request.session.get('clinic_no'))
     return True
 
-def init_context(request):
+def init_context1(request):
     """Init the context directory"""
     context = { 
         **CONTEXT,
         'clinic_name': "",
+        'date': datetime.now()
+    }
+    return context
+
+def init_session_context(request):
+    """Init the clinic session variables"""
+    if request.session.get('clinic_no') == None:
+        print( "init session")
+        try:
+            clinic_obj = request.user.user2clinic.clinic
+        except ObjectDoesNotExist:
+            print ('Not a registeret user')
+            clinic_obj = Clinic.objects.get(pk=1)
+        request.session['clinic_no'] = clinic_obj.No
+        request.session['clinic_name'] = clinic_obj.Name
+
+    context = { 
+        **CONTEXT,
+        'clinic_no': request.session['clinic_no'],
+        'clinic_name': request.session['clinic_name'],
         'date': datetime.now()
     }
     return context
@@ -55,22 +76,27 @@ def home(request):
     **Template:**
     :template:`web/home.html`
     """
-    print(init_context(request))
-    return render(request, 'web/home.html', init_context(request))
+    #context = init_session_context(request)
+    # context = {
+    #             'date': datetime.now()
+    # }
+    return render(request, 'web/home.html', CONTEXT)
 
-def help(request):
-    return render(request, 'web/help.html', init_context(request))
+def web_help(request):
+    return render(request, 'web/help.html', CONTEXT)
 
 @login_required
 def clinic_home(request):
-    if not init_clinic(request):
-        return HttpResponseForbidden()
-    context = init_context(request)
-    clinicno= request.session['clinicno']
-    scanners = list(Scanner.objects.filter(Clinic__No=clinicno).values())
+    context = init_session_context(request)
+#    if not init_clinic(request):
+#        return HttpResponseForbidden()
+#    context = init_context(request)
+    clinic_no= request.session['clinic_no']
+    scanners = list(Scanner.objects.filter(Clinic__No=clinic_no).values())
     mycontext = { **context, "scannerlist": scanners}
     return render(request, 'web/clinic.html', mycontext)
 
+@login_required
 def scanner_list(request):
     """
     Display list of the users scanners
@@ -84,10 +110,13 @@ def scanner_list(request):
 
     :template:`web/scannerlist.html`
     """
-    context = init_context(request)
-    ok = init_clinic(request)
-    clinic = request.session['clinicno']
-    clinic = 1
+
+    context = init_session_context(request)
+
+    # context = init_context(request)
+    # ok = init_clinic(request)
+    clinic = request.session['clinic_no']
+    # clinic = 1
     admin = request.GET.get('admin')
     #print (not admin)
     if not admin: 
@@ -107,11 +136,14 @@ def scanner_list(request):
 
     return render(request, 'web/scannerlist.html', mycontext)
 
+@login_required
 def select_scan(request):
-    init_clinic(request)
-    context = init_context(request)
-    clinicno= request.session['clinicno']
-    scanners = list(Scanner.objects.filter(Clinic__No=clinicno).values())
+    context = init_session_context(request)
+
+    # init_clinic(request)
+    # context = init_context(request)
+    clinic_no= request.session['clinic_no']
+    scanners = list(Scanner.objects.filter(Clinic__No=clinic_no).values())
     print(scanners)
     print(len(scanners))
     if len(scanners)==0:
@@ -122,13 +154,16 @@ def select_scan(request):
     mycontext = { **context, "scannerlist": scanners}
     return render(request,'web/selectscan.html', mycontext) 
 
+@login_required
 def scan(request):
     if not request.GET.get('scanner'):
         return HttpResponse("Error")
-    init_clinic(request)
-    context = init_context(request)
-    tmycontext = init_context(request)
-    mycontext = { **tmycontext,
+    context = init_session_context(request)
+
+    #init_clinic(request)
+    #context = init_context(request)
+    #tmycontext = init_context(request)
+    mycontext = { **context,
             'pic1_url': CLINIC_URL + '1/file1.jpg',
             'pic2_url': CLINIC_URL + '1/file2.jpg',
             #'pic1_url': DEVICE_URL,
@@ -136,41 +171,13 @@ def scan(request):
     print (mycontext)
     return render(request,'web/scan.html', mycontext) 
 
-def get_pic_info(file):
-    import PIL.Image
-
-    return "exif tekst"
-
-def pic_info(request):
-    # if not request.GET.get('scanner'):
-    #     return HttpResponse("Error - missing scanner")
-    init_clinic(request)
-    context = init_context(request)
-    tmycontext = init_context(request)
-
-    pictures = request.GET.getlist('picture')
-    pic=[]
-    for p in pictures:
-        pic.append(CLINIC_URL +"1/" + p)
-    stitch = CLINIC_URL + "1/" + request.GET.get('stitch')
-     
-    exif = get_pic_info("1/file1.jpg")
-    mycontext = { **tmycontext,
-            'pic' : pic,
-            'stitch' : stitch,
-            'pic1_url': CLINIC_URL + '1/file1.jpg',
-            'pic2_url': CLINIC_URL + '1/file2.jpg',
-            'info' : exif
-            #'pic1_url': DEVICE_URL,
-        }
-    print (mycontext)
-    return render(request,'web/pic_info.html', mycontext) 
-
-
+@login_required
 def results(request):
     """ Show the scanning results """
-    init_clinic(request)
-    context = init_context(request)
+    context = init_session_context(request)
+
+    #init_clinic(request)
+    #context = init_context(request)
  
     #print (mycontext)
     return render(request,'web/results.html', context) 

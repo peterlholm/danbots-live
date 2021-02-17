@@ -3,7 +3,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
 class PicForm(forms.Form):
-    scannerid = forms.CharField(required=False, max_length=32, strip=True)
+    deviceid = forms.CharField(required=False, max_length=32, strip=True)
     cmd = forms.CharField(required=False, label='Cmd', max_length=50, strip=True)
     Picture = forms.ImageField(label="Billed", required=False)
     Pic1 = forms.ImageField(label="Billed1", required=False)

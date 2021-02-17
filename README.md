@@ -6,13 +6,14 @@ The following fixtures initiate a new db
 sysuser.json:
 
 sysadm: general system administration
-clinicadm: a administrator at the clinic
+clinicadm1: a administrator at the clinic
+dentist1/Danbots1: a dentist
+
 peter: superuser
-user: basic user
+
 
 
 groups:
 
 sysadm: general administrators
-
 clinicadm: local administrators

@@ -1,9 +1,9 @@
 from os import makedirs
-from pathlib import Path
+#from pathlib import Path
 from django.shortcuts import render
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
 from live.settings import CLINIC_PATH
-from common.forms import *
+#from common.forms import *
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import permission_required, login_required
 

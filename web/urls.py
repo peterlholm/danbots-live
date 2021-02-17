@@ -9,5 +9,5 @@ urlpatterns = [
     path("results/", views.results, name="results"),
     path("scannerlist/", views.scanner_list, name="scannerlist"),
     #path("pic_info/", views.pic_info, name="pic_info"),
-    path("help/", views.help)
+    path("help/", views.web_help)
 ]
