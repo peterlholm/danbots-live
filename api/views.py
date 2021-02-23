@@ -67,8 +67,6 @@ def sendpic(request):
     }
     clinic=1
     if request.method == 'POST':
-        #print('FILES: ', request.FILES)
-        #print('POST', request.POST)
         picform = PicForm(request.POST, request.FILES)
         if picform.is_valid():
             FileFolder = CLINIC_PATH / str(clinic)
@@ -78,8 +76,6 @@ def sendpic(request):
 
             scannerid = picform.cleaned_data['deviceid']
             print ("ScannerID", scannerid)
-            #clinic = find_scanner_clinic(scannerid)
-            #print(request.POST.get('Pic1'))
             filelist =[]
             if request.FILES.get('Picture'):
                 pictures = request.FILES.getlist('Picture')

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+<h2>Billeder</h2>
+
+<div>
+{% for p in pic %}
+    <img src="{{ p }}"  height="100" alt="P" title="{{ p }}" />&nbsp;&nbsp;
+{% endfor %}
+</div>
+<hr />
+<h3>Folders</h3>
+<div>
+{% for f in folder %}
+    <a href="?folder={{ f }}" >{{ f }}</a>&nbsp;&nbsp;
+{% endfor %}
+</div>
+<br>
+<a href="#">tilbage</a>
+
+</div>
+
+{% endblock %}
