@@ -12,15 +12,13 @@
     "python.linting.pylintEnabled": true,
     "python.linting.enabled": true,
     "python.linting.pylintUseMinimalCheckers": false,
-    "python.languageServer": "Microsoft",
     "python.linting.pylintArgs": [
-            "--load-plugins",
-            "pylint_django",
-            "--django-settings-module=live.settings",
-            "--disable=all",
-            "--enable=F,E,W,unreachable,duplicate-key,unnecessary-semicolon,global-variable-not-assigned,unused-variable,binary-op-exception,bad-format-string,anomalous-backslash-in-string,bad-open-mode",
-            "--disable=no-absolute-import"
-        ],
-    
-    ]
+        "--load-plugins",
+        "pylint_django",
+        "--django-settings-module=live.settings",
+        "--disable=all",
+        "--enable=F,E,W,unreachable,duplicate-key,unnecessary-semicolon,global-variable-not-assigned,unused-variable,binary-op-exception,bad-format-string,anomalous-backslash-in-string,bad-open-mode",
+        "--disable=no-absolute-import"
+    ],
+    "html.format.enable": false,
 }

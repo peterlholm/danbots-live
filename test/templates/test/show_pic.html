@@ -9,8 +9,8 @@
 {% for p in pic %}
     <img src="{{ p }}"  height="100" alt="P" title="{{ p }}" />&nbsp;&nbsp;
 {% endfor %}
-</div>
-<hr />
+  </div>
+      <hr />
 <h3>Folders</h3>
 <div>
 {% for f in folder %}
@@ -18,7 +18,7 @@
 {% endfor %}
 </div>
 <br>
-<a href="#">tilbage</a>
+<a href="{% url 'show_pic' %}">Back</a>
 
 </div>
 
