@@ -5,7 +5,7 @@
 # 1. make website folder
 # 2. clone project
 
-# create virtual enov
+# create virtual env
 
 rm -f env
 python3 -m venv env
@@ -13,11 +13,11 @@ python3 -m venv env
 
 pip install -r requirements.txt
 
-chown -R www-data:peter .
-chmod -R g+w .
 
 python manage.py makemigrations
 python manage.py migrate
 python manage.py collectstatic
 
 
+#chown -R www-data:peter .
+#chmod -R g+w .
