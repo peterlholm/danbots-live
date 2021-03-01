@@ -3,11 +3,14 @@ Danbots Live site for controling scannings etc
 
 The following fixtures initiate a new db
 
-sysuser.json:
+demo.json:
 
-sysadm: general system administration
-clinicadm1: a administrator at the clinic
-dentist1/Danbots1: a dentist
+## Users
+
+danbots/Danwand1: Django admin
+sysadm/Sysa1111: general system administration
+clinicadm1/Clin1111: a administrator at the clinic
+dentist1/Dent1111: a dentist
 
 peter: superuser
 
