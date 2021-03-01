@@ -54,7 +54,8 @@ def show_pic(request):
             pic.append(url + f)
         else:
             folder.append(f)
-
+    folder.sort()
+    pic.sort()
     #pictures = request.GET.getlist('picture')
     #print(pictures)
     # if pictures:

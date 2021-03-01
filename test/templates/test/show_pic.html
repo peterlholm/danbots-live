@@ -7,9 +7,13 @@
 
 <div>
 {% for p in pic %}
-    <img src="{{ p }}"  height="100" alt="P" title="{{ p }}" />&nbsp;&nbsp;
+    <div style="float: left; margin: 15px;">
+    <img src="{{ p }}"  height="100" alt="P" title="{{ p }}" /><br>
+    <p style="font-size: 0.8em;">{{ p }}</p>
+</div>
 {% endfor %}
   </div>
+
       <hr />
 <h3>Folders</h3>
 <div>
