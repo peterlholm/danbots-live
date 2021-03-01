@@ -12,6 +12,6 @@ pylint-django
 
 #cv2
 #opencv-phython
-opencv-contrib-python
+#opencv-contrib-python
 
-imutils
+#imutils
