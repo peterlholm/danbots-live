@@ -17,3 +17,13 @@ groups:
 
 sysadm: general administrators
 clinicadm: local administrators
+
+installation:
+
+1. make folder
+2. make venv
+3. clone project
+4. chown www-data
+5. chgrp peter db.sqlite3
+6. make migrations, migrate
+7. 

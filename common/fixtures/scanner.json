@@ -1,0 +1,2 @@
+[{"model": "common.scanner", "pk": 1, "fields": {"Serial": "000", "Clinic": "1", "LastRegister":"2000-01-01T08:08:08+01", "Charge":11, "Name":"Dummy", 
+    "LocalIp":"111.112.113.114", "RemoteIp":"211.212.213.214", "HWmodel": "0.0", "SWversion": "0.1"}}]

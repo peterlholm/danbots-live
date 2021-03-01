@@ -7,7 +7,7 @@ from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from common.models import Scanner
 from live.settings import CLINIC_PATH #MEDIA_ROOT, 
-from lib.stitch_pic import stich_files
+#from lib.stitch_pic import stich_files
 from .forms import PicForm
 
 # pylint: disable=old-division
