@@ -4,8 +4,8 @@ Pillow
 
 # graphs
 django-extensions
-pylint
-pylint-django
+#pylint
+#pylint-django
 
 #pygraphviz
 #docutils
