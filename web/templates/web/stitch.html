@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+<h2>Stitch</h2>
+<div>
+{% for p in pic %}
+    <img src="{{ p }}"  height="150" alt="Pic" title="{{ p }}" />&nbsp;&nbsp;
+{% endfor %}
+</div>
+<hr>
+<br>
+{% if stitch %}
+<img id="stitch" src="{{ stitch }}" height="200" alt="stitch" title="stitchet picture"/>
+{% endif %}
+<br><br>
+    <button class="btn btn-info" type="button" onclick="location.href='?restitch=1'"  name="submit" value="restitch">Restitch</button>
+<br>
+
+{% endblock %}

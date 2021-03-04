@@ -56,10 +56,16 @@
                             <li class="nav-item">
                                 <a class="nav-link js-scroll-trigger" href="{% url 'selectscan' %}">Scan</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link js-scroll-trigger" href="{% url 'results' %}">Results</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownResult" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Results
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownResult">
+                                    <a class=" text-info dropdown-item" href="/">results</a>
+                                    <a class=" text-info dropdown-item" href="{% url 'stitch' %}">Show Stich Picture</a>
+                                </div>
                             </li>
-
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="{% url 'clinic' %}" id="navbarDropdownclinic" role="button"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -93,6 +99,7 @@
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class=" text-info dropdown-item" href="{% static 'app_db_graph.png' %}" target="_blank">DB model</a>
                                     <a class=" text-info dropdown-item" href="{% static 'all_db_graph.png' %}" target="_blank">Full DB model</a>
+                                    <a class=" text-info dropdown-item" href="{% url 'pic_info' %}" target="_blank">Stitch</a>
                                     <a class=" text-info dropdown-item" href="{% url 'pic_info' %}" target="_blank">Stitch</a>
                                 </div>
                             </li>

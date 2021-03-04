@@ -6,8 +6,8 @@ urlpatterns = [
     path("clinic/", views.clinic_home, name="clinic"),
     path("selectscan/", views.select_scan, name="selectscan"),
     path("scan/", views.scan, name="scan"),
+    path("stitch/", views.stitch, name="stitch"),
     path("results/", views.results, name="results"),
     path("scannerlist/", views.scanner_list, name="scannerlist"),
-    #path("pic_info/", views.pic_info, name="pic_info"),
     path("help/", views.web_help)
 ]

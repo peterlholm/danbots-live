@@ -6,4 +6,5 @@ django-settings-module=live.settings
 [MESSAGES CONTROL]
 
 disable=missing-function-docstring,
-        missing-module-docstring
+        missing-module-docstring,
+        line-too-long

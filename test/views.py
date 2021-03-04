@@ -43,7 +43,7 @@ def show_pic(request):
     clinic_no = request.session['clinic_no']
     #init_clinic(request)
     #context = init_context(request)
-    pic_folder = CLINIC_URL +"1/stitch/"
+    #pic_folder = CLINIC_URL +"1/stitch/"
     print(CLINIC_PATH, type(CLINIC_PATH))
     filefolder = CLINIC_PATH / str(clinic_no)
     folder = request.GET.get('folder', '')
