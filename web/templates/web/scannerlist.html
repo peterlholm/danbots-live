@@ -8,7 +8,8 @@ Danbots - Scanner list
 <h3>Scanner List</h3>
 <br>
 <table class="table table-dark table-striped">
-    <tr><th>Serial</th><th>Clinic</th><th>Name</th><th>Charge</th><th>Last Seen</th><th>LocalIp</th><th>RemoteIp</th><th>HWmodel</th><th>SWversion</th></tr>
+    <tr><th>Serial</th><th>Clinic</th><th>Name</th><th>Charge</th><th>Last Seen</th>
+        <th>LocalIp</th><th>RemoteIp</th><th>HWmodel</th><th>SWversion</th><th> </th></tr>
     {% for s in scannerlist %}  
     <tr>
         <td>{{ s.Serial }}</td>
@@ -23,6 +24,7 @@ Danbots - Scanner list
         <td>{{ s.RemoteIp }}</td>
         <td>{{ s.HWmodel }}</td>
         <td>{{ s.SWversion }}</td>
+        <td><button type="button" onclick="location.href='{% url 'control' %}?deviceid={{ s.Serial }};'" class="btn btn-sm btn-primary">Control</button> </td>
     </tr>
     {% endfor %}
 </table>

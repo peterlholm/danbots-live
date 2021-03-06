@@ -9,5 +9,6 @@ urlpatterns = [
     path("stitch/", views.stitch, name="stitch"),
     path("results/", views.results, name="results"),
     path("scannerlist/", views.scanner_list, name="scannerlist"),
+    path("control/", views.control, name="control"),
     path("help/", views.web_help)
 ]

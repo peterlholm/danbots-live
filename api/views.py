@@ -14,8 +14,7 @@ from .forms import PicForm
 
 def register(request):
     response = {
-        #'apiurl': 'http://live.danbots.com/api/',
-        'sessionid': '12345'
+
     }
     deviceid = request.GET.get('deviceid')
     charge = request.GET.get('charge')
@@ -41,8 +40,7 @@ def register(request):
         scanner.save()
         jresponse = {
             **response,
-            'clinicname': "peters klinik",
-            'clinicno': 27,
+            'cmd': scanner.CommandMode
             }
     else:
         print('No scanner found')

@@ -11,46 +11,10 @@ from common.models import Scanner, Clinic
 from live.settings import CLINIC_PATH, CLINIC_URL
 from lib.stitch_pic import stitch_files
 
-# Create your views here.
-
-
 CONTEXT = {
             'clinic_name': "",
             'date': datetime.now()
         }
-
-# def init_clinic1(request):
-#     """Init the clinic session variables"""
-#     if request.session.get('clinic_no') is None:
-#         print ("Putting in clinic 1")
-
-#         request.session['clinic_no'] = 1
-#         request.session['clinicname'] = "klinik navn"
-#     else:
-#         request.session['clinic_no'] = 1
-#         request.session['clinicname'] = "klinik admin"
-
-#         # init clinic
-#         # try:
-#         #     clinic_no = request.user.user2clinic.clinic
-#         # except ObjectDoesNotExist:
-#         #     print ('Not a registeret user')
-#         #     clinic_no=1
-#         # clinic_name = Clinic.objects.get(clinic_no=clinic_no).ClinicName
-#         # request.session['clinic_no'] = clinic_no
-#         # request.session['clinic_name'] = clinic_name
-#         # print('init_clinic', clinic_name)
-#     #print ("clinic_no", request.session.get('clinic_no'))
-#     return True
-
-# def init_context1(request):
-#     """Init the context directory"""
-#     context = {
-#         **CONTEXT,
-#         'clinic_name': "",
-#         'date': datetime.now()
-#     }
-#     return context
 
 def init_session_context(request):
     """Init the clinic session variables"""
@@ -79,10 +43,6 @@ def home(request):
     **Template:**
     :template:`web/home.html`
     """
-    #context = init_session_context(request)
-    # context = {
-    #             'date': datetime.now()
-    # }
     return render(request, 'web/home.html', CONTEXT)
 
 def web_help(request):
@@ -91,9 +51,6 @@ def web_help(request):
 @login_required
 def clinic_home(request):
     context = init_session_context(request)
-#    if not init_clinic(request):
-#        return HttpResponseForbidden()
-#    context = init_context(request)
     clinic_no= request.session['clinic_no']
     scanners = list(Scanner.objects.filter(Clinic__No=clinic_no).values())
     mycontext = { **context, "scannerlist": scanners}
@@ -115,9 +72,6 @@ def scanner_list(request):
     """
 
     context = init_session_context(request)
-
-    # context = init_context(request)
-    # ok = init_clinic(request)
     clinic = request.session['clinic_no']
     # clinic = 1
     admin = request.GET.get('admin')
@@ -198,7 +152,6 @@ def stitch(request):
     pathlist =[]
     for file in os.listdir(filefolder):
         if os.path.isfile(filefolder / file):
-            print(file)
             if file != "stitch.jpg":
                 pic.append(url + file)
                 pathlist.append(filefolder / file)
@@ -214,13 +167,39 @@ def stitch(request):
 
     stitchurl = url + "stitch.jpg"
     mycontext = { **context,
+            'page_title': "stitch",
             'pic' : pic,
             'folder' : folder,
             'stitch' : stitchurl,
             }
-    print(mycontext)
+    #print(mycontext)
     return render(request,'web/stitch.html', mycontext)
 
+@login_required
+def control(request):
+    """ Show the scanning results """
+    context = init_session_context(request)
+    deviceid = request.GET.get('deviceid')
+    if deviceid:
+        scanner = Scanner.objects.get(Serial=deviceid)
+    else:
+        return render(request,'web/control.html', context)
+    controlcmd = request.GET.get('control')
+    if controlcmd == "2dscan":
+        print("2D scan")
+        pass
+    elif controlcmd == "3dscan":
+        pass
+    else:
+        pass
+
+    mycontext = { **context,
+        'page_title': "Scanner Control",
+        'device': scanner,
+        'deviceid': deviceid,
+        'state' : "dummy",
+        }
+    return render(request,'web/control.html', mycontext)
 
 def test(request):
     return HttpResponse("Hello, Django!")

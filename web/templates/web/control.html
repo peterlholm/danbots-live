@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+<h2>Scanner control</h2>
+
+<form>
+    <input type="hidden" name="deviceid" value="{{ deviceid}}">
+    <table class="table table-sm table-borderless table-light">
+        <tr><td>Deviceid</td><td>{{ device.Serial }}</td></tr>
+        <tr><td>Clinic</td><td>{{ device.Clinic.No }}</td></tr>
+        <tr><td>Charge</td><td>{{ device.Charge }}</td></tr>
+        <tr><td>Last Seen</td><td>{{ device.LastRegister }}</td></tr>
+        <tr><td>Local IP</td><td>{{ device.LocalIp }}</td></tr>
+        <tr><td>Remote IP</td><td>{{ device.RemoteIp }}</td></tr>
+        <tr><td>State</td><td>{{ device.State }}</td></tr>
+    </table>
+
+    <button type="submit" class="btn btn-lg btn-primary" name="control" value="2dscan">2D Scan</button> 
+    <button type="submit" class="btn btn-lg btn-secondary" name="control" value="3dscan">3D Scan</button> 
+    <button type="submit" class="btn btn-lg btn-warning" name="control" value="status">Status</button> 
+    <br>
+    <hr />
+    {% url 'control' %}
+</form>
+
+{% endblock %}

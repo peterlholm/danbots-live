@@ -21,5 +21,5 @@
         "--disable=no-absolute-import"
     ],
     "python.linting.pylintArgsx2": ["-v"],
-    "html.format.enable": false,
+    "html.format.enable": true,
 }

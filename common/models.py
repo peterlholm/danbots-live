@@ -21,12 +21,12 @@ class User2clinic(models.Model):
     """
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     clinic = models.ForeignKey(Clinic, on_delete=models.CASCADE)
-    
+
 class Scanner(models.Model):
     """
     Contains information about the individual scanner
     """
-    Serial = models.CharField(max_length=16, unique=True )
+    Serial = models.CharField(max_length=16, unique=True ) # used as deviceid
     Clinic = models.ForeignKey(Clinic, null=True, blank=True, on_delete=models.SET_NULL)
     LastRegister = models.DateTimeField(null=True, blank=True)
     Charge = models.IntegerField(null=True, blank=True)
@@ -35,6 +35,8 @@ class Scanner(models.Model):
     RemoteIp = models.GenericIPAddressField(blank=True, null=True)
     HWmodel = models.CharField(max_length=20,null=True, blank=True)
     SWversion = models.CharField(max_length=20, null=True, blank=True)
+    State = models.CharField(max_length=20, null=True, blank=True)
+    CommandMode = models.CharField(max_length=20, null=True, blank=True)
 
 # class Patient(models.Model):
 #     PatientNo = models.IntegerField()
