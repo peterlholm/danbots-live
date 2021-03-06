@@ -4,7 +4,7 @@ Common models for the DanWand scanner live site
 from django.db import models
 from django.core.validators import MinValueValidator, MaxValueValidator
 #from PIL import Image
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User  # pylint: disable=imported-auth-user
 
 class Clinic(models.Model):
     """
@@ -33,7 +33,7 @@ class Scanner(models.Model):
     Name = models.CharField(max_length=20, blank=True)
     LocalIp = models.GenericIPAddressField(blank=True, null=True)
     RemoteIp = models.GenericIPAddressField(blank=True, null=True)
-    HWmodel = models.CharField(max_length=20,null=True, blank=True)
+    HWmodel = models.CharField(max_length=40,null=True, blank=True)
     SWversion = models.CharField(max_length=20, null=True, blank=True)
     State = models.CharField(max_length=20, null=True, blank=True)
     CommandMode = models.CharField(max_length=20, null=True, blank=True)

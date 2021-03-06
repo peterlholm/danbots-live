@@ -40,7 +40,8 @@ def register(request):
         scanner.save()
         jresponse = {
             **response,
-            'cmd': scanner.CommandMode
+            'cmd': scanner.CommandMode,
+            'commandmode': scanner.CommandMode,
             }
     else:
         print('No scanner found')
@@ -81,12 +82,12 @@ def sendpic(request):
         picform = PicForm(request.POST, request.FILES)
         if picform.is_valid():
             file_folder = CLINIC_PATH / str(clinic)
-            if request.POST.get('cmd')=="stitch":
-                file_folder = file_folder / "stitch"
-                os.makedirs(file_folder, exist_ok=True)
+            cmd = request.POST.get('cmd')
+            if cmd in ['stich','picture']:
+                file_folder = file_folder / cmd
             else:
                 file_folder = file_folder / "temp"
-                os.makedirs(file_folder, exist_ok=True)
+            os.makedirs(file_folder, exist_ok=True)
 
             deviceid = picform.cleaned_data['deviceid']
             print ("DeviceID", deviceid)
@@ -105,15 +106,6 @@ def sendpic(request):
             if request.POST.get('cmd')=="stitch":
                 print("Stitching.....")
                 #result = stich_files(filelist, file_folder / "ud.jpg")
-                #import threading
-                # t = threading.Thread(target=long_process,
-                #                             args=args,
-                #                             kwargs=kwargs)
-                # t.setDaemon(True)
-                # t.start()
-                # return HttpResponse()
-                #print("Stiching result", result)
-                #return redirect("/test/pic_info/")
             if request.FILES.get('Pic1'):
                 # debug
                 param = "?"

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+<style>
+    td {
+        font-size: 0.6em;
+        padding: 1px !important;
+    }
+</style>
+<br>
+<div class="row">
+<div class="col">
+    <p>Deviceid: {{ deviceid }}</p>
+    <img src="{{ picture }}" xheight="100" width="100%" alt="Picture" title="{{ picture }}" /><br>
+    <p style="font-size: 0.8em;">{{ picture }}</p>
+    <br>
+    <hr />
+    <br>
+    {% if deviceid %}
+    <button type="submit" class="btn btn-lg btn-primary" name="control" value="picture">Take</button>
+    <!-- <button type="submit" class="btn btn-lg btn-secondary" name="control" value="3dscan">3D Scan</button>
+    <button type="submit" class="btn btn-lg btn-warning" name="control" value="status">Status</button> -->
+    {% endif %}
+    <br>
+</div>
+
+<div class="col">
+    <table class="table table-bordered table-dark table-sm">
+    {% for key, val in exif.items %}
+    <tr><td>{{ key }}</td><td> {{ val|safe }}</td></tr>
+    {% endfor %}
+</table>
+</div>
+</div>
+<a href="{% url 'show_picture' %}">Back</a>
+</div>
+
+{% endblock %}

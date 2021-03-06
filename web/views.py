@@ -2,6 +2,7 @@
 import os
 from pathlib import Path
 from datetime import datetime
+from PIL import Image, ExifTags
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -37,12 +38,6 @@ def init_session_context(request):
     return context
 
 def home(request):
-    """
-    Display the users home page
-    **Context**
-    **Template:**
-    :template:`web/home.html`
-    """
     return render(request, 'web/home.html', CONTEXT)
 
 def web_help(request):
@@ -58,19 +53,6 @@ def clinic_home(request):
 
 @login_required
 def scanner_list(request):
-    """
-    Display list of the users scanners
-
-    **Context**
-
-    ``context``
-      et eller andet
-
-    **Template:**
-
-    :template:`web/scannerlist.html`
-    """
-
     context = init_session_context(request)
     clinic = request.session['clinic_no']
     # clinic = 1
@@ -187,7 +169,6 @@ def control(request):
     controlcmd = request.GET.get('control')
     if controlcmd == "2dscan":
         print("2D scan")
-        pass
     elif controlcmd == "3dscan":
         pass
     else:
@@ -200,6 +181,26 @@ def control(request):
         'state' : "dummy",
         }
     return render(request,'web/control.html', mycontext)
+
+@login_required
+def show_picture(request):
+    """ Show the scanning results """
+    context = init_session_context(request)
+    deviceid = request.GET.get('deviceid')
+
+    pic_file = "data/clinics/1/picture/file.jpg"
+    img = Image.open(pic_file)
+    exif = { ExifTags.TAGS[k]: v for k, v in img._getexif().items() if k in ExifTags.TAGS } # pylint: disable=protected-access
+
+    print(context)
+    mycontext = { **context,
+        'page_title': "Scanner Control",
+        'deviceid': deviceid,
+        'picture' : "/data/clinics/1/picture/file.jpg",
+        'exif': exif
+        }
+    #print(mycontext)
+    return render(request,'web/show_picture.html', mycontext)
 
 def test(request):
     return HttpResponse("Hello, Django!")
