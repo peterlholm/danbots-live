@@ -4,35 +4,18 @@
 
 {% block content %}
 <h2>Scanning</h2>
-<script type="text/javascript">
-    function UpdatePic() {
-        if (!document.images) return;
-        obj = document.getElementById('scan1');
-        console.log(obj.src);
-        //obj.src = obj.src;
-        obj.src = obj.src.split("?")[0] + '?' + Math.random();
-        //obj2 = document.getElementById('scan2');
-        //obj2.src = obj2.src.split("?")[0] + '?' + Math.random();
-        obj.onload = imgloaded;
-    }
 
-    function imgloaded() {
-        if (run) setTimeout('UpdatePic()',200);   /*time in milliseconds... same as in 'onload'*/
-    }
-
-    var run=false;
-</script>
-<p>Viser sidste billeder fra scanner </p>
-
-<div id="scanview">
-    <img id="scan1" src="{{ pic1_url }}" onload="imgloaded()" height="300" alt="Picture 1" title="Dette er billed fra scanneren"  />
-    {% comment %} <img id="scan2" src="{{ pic2_url }}" alt="picture 2" title="Dette er et still billede"  /> {% endcomment %}
+<div id="scannerview">
+    <!-- <img id="scan1" src="http://danwand.local:8080/"  xheight="300" alt="scanner" title="Dette er billed fra scanneren"  /> -->
+    <img id="scan1" src="{{ scan_url }}"  height="200px" min-width="200px" alt="scanner" title="Scanning...."  />
+    <img id="pic1" src="{{ pic_url }}"  height="200px" alt="picture" title="Last Picture"  />
+    <img id="3d" src="{{ 3d_url }}"  height="200px" alt="3d" title="3D model"  />
 </div>
-<hr />
-<p>Ved tryk på start opdateres billede løbende (ca 5 billeder pr sek)</p>
-<button onclick="run=true;setTimeout('UpdatePic()',1000);" class="btn btn-primary">START</button>
-&nbsp;&nbsp;
-<button onclick="run=false;" class="btn btn-secondary">STOP</button>
 
+<hr />
+
+<button class="btn btn-primary">START</button>
+&nbsp;&nbsp;
+<button class="btn btn-secondary">STOP</button>
 
 {% endblock %}

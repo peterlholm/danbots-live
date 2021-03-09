@@ -95,16 +95,21 @@ def select_scan(request):
 
 @login_required
 def scan(request):
-    if not request.GET.get('scanner'):
+    if not request.GET.get('deviceid'):
         return HttpResponse("Error")
     context = init_session_context(request)
-
-    #init_clinic(request)
-    #context = init_context(request)
-    #tmycontext = init_context(request)
+    deviceid = request.GET.get('deviceid')
+    if deviceid:
+        scanner = Scanner.objects.get(Serial=deviceid)
+    else:
+        return HttpResponse("Deviceid Error")
+        #return render(request,'web/control.html', context)
+    #print(scanner.LocalIp)
+    scan_url = "http://"+scanner.LocalIp+":8080"
     mycontext = { **context,
-            'pic1_url': CLINIC_URL + '1/file1.jpg',
-            'pic2_url': CLINIC_URL + '1/file2.jpg',
+            'scan_url': scan_url,
+            'pic_url': "/static/tand.jpg",
+            '3d_url': "/static/3d.png",
             #'pic1_url': DEVICE_URL,
         }
     print (mycontext)

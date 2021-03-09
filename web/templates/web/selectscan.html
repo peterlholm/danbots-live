@@ -17,7 +17,7 @@ Danbots - Select Scanner
             <meter value="{{ s.Charge }}" max="100" low="25" high="95" optimum="80" title="{{ s.Charge }}%">{{ s.Charge }}% </meter> 
             {% endif %}
         </td>
-        <td><a href="{% url 'scan'%}?scanner={{s.Serial}}"><button class="btn btn-info">SELECT</button></a></td>
+        <td><a href="{% url 'scan'%}?deviceid={{s.Serial}}"><button class="btn btn-info">SELECT</button></a></td>
     </tr>
     {% endfor %}
 </table>
