@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import  login_required  # permission_require
 from django.http import HttpResponse #, HttpResponseForbidden
 from common.models import Scanner, Clinic
 from live.settings import CLINIC_PATH, CLINIC_URL
-from lib.stitch_pic import stitch_files
+from appl.stitch_pic import stitch_files
 
 CONTEXT = {
             'clinic_name': "",
