@@ -14,4 +14,7 @@ django-extensions
 #opencv-phython
 #opencv-contrib-python
 
-#imutils
+# server
+# opencv-python-headless
+# opencv-contrib-python-headless
+# imutils

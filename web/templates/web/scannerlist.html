@@ -24,7 +24,7 @@ Danbots - Scanner list
         <td>{{ s.RemoteIp }}</td>
         <td>{{ s.HWmodel }}</td>
         <td>{{ s.SWversion }}</td>
-        <td><button type="button" onclick="location.href='{% url 'control' %}?deviceid={{ s.Serial }};'" class="btn btn-sm btn-primary">Control</button> </td>
+        <td><button type="button" onclick="location.href='{% url 'control' %}?deviceid={{ s.Serial }}'" class="btn btn-sm btn-primary">Control</button> </td>
     </tr>
     {% endfor %}
 </table>

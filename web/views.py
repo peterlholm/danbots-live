@@ -61,7 +61,7 @@ def scanner_list(request):
     if not admin:
         scanners = list(Scanner.objects.filter(Clinic_id=clinic).values())
     else:
-        scanners = list(Scanner.objects.all().values())
+        scanners = list(Scanner.objects.all().order_by('-LastRegister').values())
 
     #print(clinic)
     mycontext = { **context, "scannerlist": [{'device':"1ddd", 'name':"nr1", 'charge':60}, {'device':"3ddd", 'charge':10} ]}
@@ -109,7 +109,7 @@ def scan(request):
     mycontext = { **context,
             'scan_url': scan_url,
             'pic_url': "/static/tand.jpg",
-            '3d_url': "/static/3d.png",
+            '3d_url': "/static/3d_2.png",
             #'pic1_url': DEVICE_URL,
         }
     print (mycontext)
