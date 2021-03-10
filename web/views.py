@@ -37,8 +37,14 @@ def init_session_context(request):
     }
     return context
 
+def public_home(request):
+    return render(request, 'public_home.html')
+
 def home(request):
-    return render(request, 'web/home.html', CONTEXT)
+    if request.user.is_authenticated:
+        return redirect(reverse('clinic'))
+    else:
+        return render(request, 'public_home.html')
 
 def web_help(request):
     return render(request, 'web/help.html', CONTEXT)

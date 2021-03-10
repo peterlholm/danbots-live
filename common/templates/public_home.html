@@ -1,0 +1,27 @@
+{% extends "public_base.html" %}
+{% block title %}
+Danbots
+{% endblock %}
+
+{% block content %}
+<br>
+<h3>Wellcome to Danbots tooth scanning site</h3>
+<br>
+<p>To use the site you need a DanWand © scanner</p>
+<br>
+<p>For more information visit <a href="http://info.danbots.com">http://info.danbots.com</a></p>
+<br>
+{% if not user.is_authenticated %}
+<p>Login to start</p>
+<div class="text-center">
+    <a class="nav-link js-scroll-trigger" href="{% url 'login' %}">
+        <button class="btn btn-lg btn-light" style="width: 20%;">Login</button>
+    </a>
+    {% else %}
+    <a class="nav-link js-scroll-trigger" href="{% url 'logout' %}">
+        <button class="btn btn-lg btn-light" style="width: 20%;">Logout</button>
+    </a>
+</div>
+dfdfd
+{% endif %}
+{% endblock %}

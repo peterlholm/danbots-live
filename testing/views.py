@@ -1,7 +1,7 @@
 import os
 from os.path import isfile
 from django.shortcuts import render
-#from django.http import HttpResponse
+from django.http import HttpResponse
 from django.contrib.auth.decorators import  login_required  # permission_required,
 from live.settings import  CLINIC_URL, CLINIC_PATH
 from web.views import init_session_context #init_clinic, init_context
@@ -9,6 +9,12 @@ from web.views import init_session_context #init_clinic, init_context
 # def get_pic_info(file):
 #     #import PIL.Image
 #     return "exif tekst"
+
+def dummy(request):
+    return HttpResponse("dummy")
+
+def template(request):
+    return render(request,'test/test.html')
 
 @login_required
 def pic_info(request):

@@ -22,6 +22,6 @@ urlpatterns = [
     path("", include("web.urls")),
     path("", include("common.urls")),
     path("", include("api.urls")),
-    path("", include("test.urls")),
+    path("", include("testing.urls")),
      path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
