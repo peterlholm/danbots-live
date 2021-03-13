@@ -16,7 +16,7 @@ admin.site.register(Clinic, ClinicAdmin)
 
 class ScannerAdmin(admin.ModelAdmin):
     #fields = ('Serial', 'Clinic', 'Name', 'LastRegister','Charge', 'LocalIp', 'RemoteIp', 'HWmodel','SWversion')
-    list_display = ('Serial', 'Clinic', 'LastRegister','Charge')
+    list_display = ('Serial', 'Name', 'Clinic', 'LastRegister','Charge')
 admin.site.register(Scanner, ScannerAdmin)
 
 # class PatientAdmin(admin.ModelAdmin):

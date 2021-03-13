@@ -83,6 +83,7 @@ def sendpic(request):
         if picform.is_valid():
             file_folder = CLINIC_PATH / str(clinic)
             cmd = request.POST.get('cmd')
+            print("cmd",cmd)
             if cmd in ['stich','picture']:
                 file_folder = file_folder / cmd
             else:

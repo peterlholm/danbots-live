@@ -4,19 +4,19 @@
     <nav class="">
         <ul class="nav flex-column nav-pills nav-fill menu1button" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" href="{% url 'clinic' %}" data-toggle="pill" role="tab" xaria-controls="home" xaria-selected="true" ><i class="fa fa-home"></i>Home</a>
+                <a id="menu1_home"class="nav-link" href="{% url 'clinic' %}" xdata-toggle="pill" xrole="tab"><i class="fa fa-home"></i>Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'scan_pic' %}" data-toggle="pill" xrole="tab" xaria-selected="false" >Scan Picture</a>
+                <a id="menu1_scanpic" class="nav-link" href="{% url 'scan_pic' %}" xdata-toggle="pill" xrole="tab">Scan Picture</a>
             </li>
             <li class="nav-item ">
-                <a class="nav-link" href="{% url 'selectscan' %}">Scan</a>
+                <a class="nav-link" href="{% url 'show_pic' %}">Show Pictures</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{% url 'selectscan' %}">Results</a>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCla" role="button" data-toggle="dropdown"
+                <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdownCla" role="button" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                     Clinic Adm
                 </a>
@@ -29,10 +29,11 @@
             <a class=" text-info dropdown-item" href="{% url 'clinicadm' %}">Create Clinik</a>
         </ul>
     </nav>
-    <script>
-        $(".nav li").on("click", function() {
+
+        <!-- $(".nav li").on("click", function() {
+            console.log("shift");
             $(".nav li").removeClass("active");
             $(this).addClass("active");
-        });
-    </script>
+        }); -->
+  
 </div> <!-- menu1 -->

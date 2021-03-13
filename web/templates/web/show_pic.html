@@ -1,0 +1,32 @@
+{% extends "base2.html" %}
+
+{% load static %}
+
+{% block content %}
+<h2>Picture</h2>
+<div>
+    <div class="card-group">
+{% for p in pic %}
+<div class="card" style="width: 12rem;">
+    <img class="card-img-top" src="{{ p }}" alt="Card image cap">
+    <div class="card-body">
+      <!-- <h5 class="card-title">Card title</h5> -->
+      <!-- <p class="card-text">{{ p }}</p> -->
+      <a href="{{ p }}" class="card-link">full</a>
+      <!-- <a href="{{ p }}" class="btn btn-primary">Se fuld størelse</a> -->
+    </div>
+</div>
+    <!-- <img src="{{ p }}"  height="150" alt="Pic" title="{{ p }}" />&nbsp;&nbsp; -->
+{% endfor %}
+</div>
+</div>
+<hr>
+<br>
+{% if stitch %}
+<img id="stitch" src="{{ stitch }}" height="200" alt="stitch" title="stitchet picture"/>
+{% endif %}
+<br><br>
+    <button class="btn btn-info" type="button" onclick="location.href='?restitch=1'"  name="submit" value="restitch">Restitch</button>
+<br>
+
+{% endblock %}

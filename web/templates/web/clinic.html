@@ -10,7 +10,13 @@ Danbots - Clinic
 <br>
 <img src="{% static 'web/img/process.jpg' %}" class="ximg-fluid" height="250" alt="workflow" />
 
-<p>Start a scan in the menu scan</p>
-<p>Look at your final scan results in Results  ....</p>
+<p>You have x scan in progress</p>
+<p>You have 3 incomming messages</p>
 
+{% endblock %}
+
+{% block script %}
+<script>
+    $("#menu1_home").addClass("active");
+</script>
 {% endblock %}

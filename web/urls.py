@@ -6,7 +6,10 @@ urlpatterns = [
     path("", views.home, name="home"),
     path("clinic/", views.clinic_home, name="clinic"),
     path("scan_pic/", views.scan_pic, name="scan_pic"),
-     path("selectscan/", views.select_scan, name="selectscan"),
+    path("show_pic/", views.show_pic, name="show_pic"),
+
+
+    path("selectscan/", views.select_scan, name="selectscan"),
     path("scan/", views.scan, name="scan"),
     path("stitch/", views.stitch, name="stitch"),
     path("results/", views.results, name="results"),

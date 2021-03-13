@@ -73,31 +73,66 @@ def scan_pic(request):
         if active_device:
             #print ("device", active_device)
             request.session['active_device'] = active_device
-
     scannerlist=[]
     for s in scanners:
-        #print("scanner",s)
         selected=''
         if s['Serial']==active_device:
             selected='selected'
-        scannerlist.append({'serial': s['Serial'], 'nameid': s['Name']+'('+s['Serial']+')', 'selected': selected })
-
+        scannerlist.append({'serial': s['Serial'], 'nameid': s['Name']+' ('+s['Serial']+')', 'selected': selected })
+    print ("active_device", active_device)
+    scan_url=""
+    if active_device:
+        act_scanner = Scanner.objects.get(Serial=active_device)
+        print (act_scanner)
+        scan_url = "http://"+act_scanner.LocalIp+":8080"
+        print (scan_url)
     mycontext = {**context,
             'active_device': active_device,
             'scannerlist': scannerlist,
             'power': 50,
-            'online': True
+            'online': True,
+            'scan_url': scan_url,
     }
-
-    mycontext = {**context,
-            'active_device': active_device,
-            'scannerlist': scannerlist,
-            'power': 50,
-            'online': True
-    }
-
     return render(request, 'web/scan_pic.html', mycontext)
 
+@login_required
+def show_pic(request):
+    context = init_session_context(request)
+    clinic_no = request.session['clinic_no']
+    clinic_path = Path(request.session['clinic_path'])
+    filefolder = clinic_path / "picture"
+    url = CLINIC_URL + str(clinic_no) + "/picture/"
+    pic=[]
+    folder=[]
+    pathlist =[]
+    for file in os.listdir(filefolder):
+        if os.path.isfile(filefolder / file):
+            if file != "stitch.jpg":
+                pic.append(url + file)
+                pathlist.append(filefolder / file)
+        else:
+            folder.append(file)
+    folder.sort()
+    pic.sort()
+
+    if request.GET.get('restitch', None):
+        print ("Restitch")
+        outpath = filefolder / "stitch.jpg"
+        stitch_files(pathlist, outpath  )
+
+    stitchurl = url + "stitch.jpg"
+    mycontext = { **context,
+            'page_title': "stitch",
+            'pic' : pic,
+            'folder' : folder,
+            'stitch' : stitchurl,
+            }
+    print(mycontext)
+
+    return render(request, 'web/show_pic.html', mycontext)
+
+
+########################### old functions ##################################
 @login_required
 def scanner_list(request):
     context = init_session_context(request)

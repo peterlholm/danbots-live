@@ -6,22 +6,35 @@ Scan Picture
 {% endblock %}
 
 {% block content %}
-<h3>Scan Picture</h3>
 <div id="scanner">
     <form>
         <label class="" for="scanner">Scanner</label>
         <select id="scanner" class="xcustom-select" name="deviceid" onchange="submit();">
+            <option value="">-- select device --</option>
             {% for s in scannerlist %} 
              <option value="{{ s.serial }}" {{ s.selected }}>{{ s.nameid}}</option>
             {% endfor %}
         </select>
         Power:
-        <meter value="{{ power }}" min="0" max="100" low="25" high="80" optimum="90" title="{{ power }}%">{{ power }}%
-        </meter>
-    </form>
-    {{ active_device }}
+        <meter value="{{ power }}" min="0" max="100" low="25" high="80" optimum="90" title="{{ power }}%">{{ power }}%</meter>
+        Active: {{ active_device }}
+    </form>   
 </div>
+<div id="pictures" style="height:300px; width:300px; background-color: antiquewhite;float:left;">
 
 </div>
+<div class="liveview" style="height:300px; width:300px; background-color: lightblue;float:left; ">
+    <img src="{{ scan_url }}" height=300 width=300>
+</div>
+<div style="clear: both;">
+<a href = "{% url 'scan_pic' %}" class="btn btn-primary">Start Capture</a>
 
+<a href = "{% url 'show_pic' %}" class="btn btn-primary">Stop Capture</a>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+    $("#menu1_scanpic").addClass("active");
+</script>
 {% endblock %}
