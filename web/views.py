@@ -15,7 +15,7 @@ from appl.stitch_pic import stitch_files
 
 CONTEXT = {
             'clinic_name': "",
-            'date2': datetime.now()
+            'date': datetime.now()
         }
 
 def init_session_context(request):
@@ -42,7 +42,7 @@ def init_session_context(request):
     return context
 
 def public_home(request):
-    return render(request, 'public_home.html')
+    return render(request, 'public_home.html', CONTEXT)
 
 def home(request):
     if request.user.is_authenticated:
@@ -74,11 +74,11 @@ def scan_pic(request):
             #print ("device", active_device)
             request.session['active_device'] = active_device
     scannerlist=[]
-    for s in scanners:
+    for sc1 in scanners:
         selected=''
-        if s['Serial']==active_device:
+        if sc1['Serial']==active_device:
             selected='selected'
-        scannerlist.append({'serial': s['Serial'], 'nameid': s['Name']+' ('+s['Serial']+')', 'selected': selected })
+        scannerlist.append({'serial': sc1['Serial'], 'nameid': sc1['Name']+' ('+sc1['Serial']+')', 'selected': selected })
     print ("active_device", active_device)
     scan_url=""
     if active_device:

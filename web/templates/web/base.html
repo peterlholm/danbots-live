@@ -13,12 +13,10 @@
     <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <!-- <link rel="stylesheet" type="text/css" href="{% static 'web/site.css' %}" /> -->
-    <link rel="stylesheet" type="text/css" href="{% static 'website.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'web/website.css' %}" />
     <!-- <link rel="apple-touch-icon" href="{% static "pic/dv192.png" %}" type="image/png"  sizes="192x192" > -->
     <!-- <link rel="manifest" href="{% static 'web/manifest.json' %}" crossorigin="use-credentials"> -->
     <!-- <meta name="theme-color" content="#2196F3"> -->
-
     {% block header %}
     {% endblock %}
 </head>
@@ -59,8 +57,18 @@
         </div> <!-- header -->
         <div id="page">
             <main>
+                {% if debug %} {# debug to peter #}
+                debug
+                {% endif %}
+                {% if perms.common.add_clinic %} {# sysadm #}
+                clinic adm
+                {% include 'web/menu2.html' %}
+                {% endif %}
+                {% if user.is_superuser %}
+                superuser
+                {% endif %}
                 {% if user.is_authenticated %}
-                {% include 'menu1.html' %}
+                {% include 'web/menu1.html' %}
                 {% endif %}
 
                 <div class="xflex-shrink-0 xbody-content content">
@@ -84,7 +92,6 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js"
             integrity="sha384-1CmrxMRARb6aLqgBO7yyAxTOQE2AKb9GfXnEo760AUcUmFx3ibVJJAzGytlQcNXd"
             crossorigin="anonymous"></script>
-
         {% block script %}
         {% endblock %}
     </div>

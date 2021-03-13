@@ -41,14 +41,13 @@ body {
 }
 
 #page {
-    background-color: #dddddd;
     background: url("img/DW32.png");
     height: 80%;
 }
 
 .menu1 {
-    width: 300px;
-    height: 500px;
+    width: 270px;
+    height: 90%;
     float: left;
     border-radius: 25px;
     border:solid black 1px; 
@@ -57,8 +56,8 @@ body {
 }
 
 .menu1button a {
-    margin: 20px;
-    width: 80%;
+    margin: 15px;
+    width: 85%;
     height: 60px;
     font-size: 1.5em;
     font-weight: 500;
