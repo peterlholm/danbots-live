@@ -1,0 +1,102 @@
+{% load static %}
+<div id="menu2" class="l_menu">
+    <!-- Navigation 2-->
+    <nav class="navbar navbar-expand-lg xxnavbar-dark xfixed-top" id="debugmainNav">
+        <div class="container">
+            <a class="navbar-brand js-scroll-trigger" href="/">DanBots</a>
+            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
+                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
+                aria-label="Toggle navigation">
+                Menu
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarResponsive">
+                <ul class="navbar-nav ml-auto">
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="{% url 'clinic' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="{% url 'selectscan' %}">Scan</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownResult" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Results
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownResult">
+                            <a class=" text-info dropdown-item" href="/">results</a>
+                            <a class=" text-info dropdown-item" href="{% url 'stitch' %}">Show Stich Picture</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="{% url 'clinic' %}" id="navbarDropdownclinic"
+                            role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Clinic
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownClinic">
+                            <a class=" text-info dropdown-item" href="/">List of scans</a>
+                            <a class=" text-info dropdown-item" href="{% url 'scannerlist' %}">List of DanWand
+                                scanners</a>
+                        </div>
+                    </li>
+                    {% endif %}
+                    {% if perms.common.add_appuser %} {# clinicadm #}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCla" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Clinic Adm
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownCla">
+                            <a class=" text-info dropdown-item" href="/">Create dentist login</a>
+                            <a class=" text-info dropdown-item" href="/">Tilknyt scanner</a>
+                            <a class=" text-info dropdown-item" href="/">Adm / accounting</a>
+                        </div>
+                    </li>
+                    {% endif %}
+                    {% if debug %} {# debug to peter #}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Debug
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class=" text-info dropdown-item" href="{% static 'app_db_graph.png' %}"
+                                target="_blank">DB model</a>
+                            <a class=" text-info dropdown-item" href="{% static 'all_db_graph.png' %}"
+                                target="_blank">Full DB model</a>
+                            <a class=" text-info dropdown-item" href="{% url 'pic_info' %}" target="_blank">Stitch</a>
+                            <a class=" text-info dropdown-item" href="{% url 'pic_info' %}" target="_blank">Stitch</a>
+                        </div>
+                    </li>
+                    {% endif %}
+                    {% if perms.common.add_clinic %} {# sysadm #}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownSy" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            SysAdm
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownSy">
+                            <a class=" text-info dropdown-item" href="{% url 'clinicadm' %}">Create Clinik</a>
+                            <a class=" text-info dropdown-item" href="{% url 'scannerlist' %}?admin=1">Scanners</a>
+                            <a class=" text-info dropdown-item" href="/admin" target="_blank">Django Admin</a>
+                            <a class=" text-info dropdown-item" href="{% static 'app_db_graph.png' %}"
+                                target="_blank">DB model</a>
+                            <a class=" text-info dropdown-item" href="/test/pic_info/" target="_blank">Stitch</a>
+                        </div>
+                    </li>
+                    {% endif %}
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="{% url 'logout' %}">Logout</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link js-scroll-trigger" href="{% url 'login' %}?next=/clinic">Login</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div> <!-- menu -->

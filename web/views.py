@@ -11,21 +11,25 @@ from django.http import HttpResponse #, HttpResponseForbidden
 from common.models import Scanner, Clinic
 from live.settings import CLINIC_PATH, CLINIC_URL
 from appl.stitch_pic import stitch_files
+#from .forms import ScannerForm
 
 CONTEXT = {
             'clinic_name': "",
-            'date': datetime.now()
+            'date2': datetime.now()
         }
 
 def init_session_context(request):
     """Init the clinic session variables"""
     if request.session.get('clinic_no') is None:
         #print( "init new session")
-        try:
-            clinic_obj = request.user.user2clinic.clinic
-        except ObjectDoesNotExist:
-            #print ('Not a registeret user')
+        if request.user.is_anonymous:
             clinic_obj = Clinic.objects.get(pk=1)
+        else:
+            try:
+                clinic_obj = request.user.user2clinic.clinic
+            except ObjectDoesNotExist:
+                #print ('Not a registeret user')
+                clinic_obj = Clinic.objects.get(pk=1)
         request.session['clinic_no'] = clinic_obj.No
         request.session['clinic_name'] = clinic_obj.Name
         request.session['clinic_path'] = str(CLINIC_PATH / str(clinic_obj.No))
@@ -44,7 +48,7 @@ def home(request):
     if request.user.is_authenticated:
         return redirect(reverse('clinic'))
     else:
-        return render(request, 'public_home.html')
+        return render(request, 'web/home.html', CONTEXT)
 
 def web_help(request):
     return render(request, 'web/help.html', CONTEXT)
@@ -56,6 +60,43 @@ def clinic_home(request):
     scanners = list(Scanner.objects.filter(Clinic__No=clinic_no).values())
     mycontext = { **context, "scannerlist": scanners}
     return render(request, 'web/clinic.html', mycontext)
+
+@login_required
+def scan_pic(request):
+    context = init_session_context(request)
+    clinic_no= request.session['clinic_no']
+    scanners = list(Scanner.objects.filter(Clinic__No=clinic_no).values())
+    active_device = request.session.get('active_device')
+
+    if request.method == 'GET':
+        active_device = request.GET.get('deviceid')
+        if active_device:
+            #print ("device", active_device)
+            request.session['active_device'] = active_device
+
+    scannerlist=[]
+    for s in scanners:
+        #print("scanner",s)
+        selected=''
+        if s['Serial']==active_device:
+            selected='selected'
+        scannerlist.append({'serial': s['Serial'], 'nameid': s['Name']+'('+s['Serial']+')', 'selected': selected })
+
+    mycontext = {**context,
+            'active_device': active_device,
+            'scannerlist': scannerlist,
+            'power': 50,
+            'online': True
+    }
+
+    mycontext = {**context,
+            'active_device': active_device,
+            'scannerlist': scannerlist,
+            'power': 50,
+            'online': True
+    }
+
+    return render(request, 'web/scan_pic.html', mycontext)
 
 @login_required
 def scanner_list(request):
