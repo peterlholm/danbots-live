@@ -42,6 +42,17 @@
                     {% endif %}
                 </div>
             </div>
+            <div style="font-size: 12px;">
+                {% if user.is_superuser %}
+                superuser
+                {% endif %}
+                {% if perms.common.add_clinic %} {# sysadm #}
+                clinic adm
+                {% endif %}
+                {% if debug %} {# debug to peter #}
+                debug
+                {% endif %}
+            </div>
             <div id="login">
                 <img id="bell" src="{% static 'icons/bell.svg' %}" height="30" alt="bell" />
                 {% if user.is_authenticated %}
@@ -57,20 +68,13 @@
         </div> <!-- header -->
         <div id="page">
             <main>
-                {% if debug %} {# debug to peter #}
-                debug
-                {% endif %}
-                {% if perms.common.add_clinic %} {# sysadm #}
-                clinic adm
+                {% if user.is_authenticated %}
                 {% include 'web/menu2.html' %}
                 {% endif %}
-                {% if user.is_superuser %}
-                superuser
-                {% endif %}
+
                 {% if user.is_authenticated %}
                 {% include 'web/menu1.html' %}
                 {% endif %}
-
                 <div class="xflex-shrink-0 xbody-content content">
                     {% block content %}
                     {% endblock %}

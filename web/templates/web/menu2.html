@@ -3,19 +3,8 @@
     <!-- Navigation 2-->
     <nav class="navbar navbar-expand-lg xxnavbar-dark xfixed-top" id="debugmainNav">
         <div class="container">
-            <a class="navbar-brand js-scroll-trigger" href="/">DanBots</a>
-            <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-                data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
-                aria-label="Toggle navigation">
-                Menu
-                <i class="fas fa-bars"></i>
-            </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
-                    {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link js-scroll-trigger" href="{% url 'clinic' %}">Home</a>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link js-scroll-trigger" href="{% url 'selectscan' %}">Scan</a>
                     </li>
@@ -25,7 +14,6 @@
                             Results
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownResult">
-                            <a class=" text-info dropdown-item" href="/">results</a>
                             <a class=" text-info dropdown-item" href="{% url 'stitch' %}">Show Stich Picture</a>
                         </div>
                     </li>
@@ -40,7 +28,6 @@
                                 scanners</a>
                         </div>
                     </li>
-                    {% endif %}
                     {% if perms.common.add_appuser %} {# clinicadm #}
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCla" role="button"

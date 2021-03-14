@@ -1,0 +1,13 @@
+<div class="device_select">
+    <label class="" for="scanner">Scanner</label>
+    <select id="scanner" class="xcustom-select" name="deviceid" onchange="submit();">
+        <option value="">-- select device --</option>
+        {% for s in scannerlist %}
+        <option value="{{ s.serial }}" {{ s.selected }}>{{ s.nameid}}</option>
+        {% endfor %}
+    </select>
+    Power:
+    <meter value="{{ power }}" min="0" max="100" low="25" high="80" optimum="90" title="{{ power }}%">{{ power
+        }}%</meter>
+    Active: {{ active_device }}
+</div>

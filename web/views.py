@@ -41,17 +41,11 @@ def init_session_context(request):
     }
     return context
 
-def public_home(request):
-    return render(request, 'public_home.html', CONTEXT)
-
 def home(request):
     if request.user.is_authenticated:
         return redirect(reverse('clinic'))
     else:
         return render(request, 'web/home.html', CONTEXT)
-
-def web_help(request):
-    return render(request, 'web/help.html', CONTEXT)
 
 @login_required
 def clinic_home(request):
@@ -60,6 +54,38 @@ def clinic_home(request):
     scanners = list(Scanner.objects.filter(Clinic__No=clinic_no).values())
     mycontext = { **context, "scannerlist": scanners}
     return render(request, 'web/clinic.html', mycontext)
+
+def get_scanner_context(request, clinic_no=None):
+    if not clinic_no:
+        clinic_no=request.session['clinic_no']
+    scanners = list(Scanner.objects.filter(Clinic__No=clinic_no).values())
+    active_device = request.session.get('active_device')
+    if request.method == 'GET':
+        active_device = request.GET.get('deviceid')
+        if active_device:
+            print ("device", active_device)
+            request.session['active_device'] = active_device
+    scannerlist=[]
+    for sc1 in scanners:
+        selected=''
+        if sc1['Serial']==active_device:
+            selected='selected'
+        scannerlist.append({'serial': sc1['Serial'], 'nameid': sc1['Name']+' ('+sc1['Serial']+')', 'selected': selected })
+    print ("active_device", active_device)
+    scan_url=""
+    if active_device:
+        act_scanner = Scanner.objects.get(Serial=active_device)
+        print (act_scanner)
+        scan_url = "http://"+act_scanner.LocalIp+":8080"
+        print (scan_url)
+    context = {
+            'active_device': active_device,
+            'scannerlist': scannerlist,
+            'power': 50,
+            'online': True,
+            'scan_url': scan_url,
+    }
+    return context
 
 @login_required
 def scan_pic(request):
@@ -94,6 +120,27 @@ def scan_pic(request):
             'scan_url': scan_url,
     }
     return render(request, 'web/scan_pic.html', mycontext)
+
+@login_required
+def show_picture(request):
+    """ Show the scanning results """
+    context = init_session_context(request)
+    deviceid = request.GET.get('deviceid')
+    scanner_context = get_scanner_context(request)
+    pic_file = "data/clinics/1/picture/picture1.jpg"
+    img = Image.open(pic_file)
+    exif = { ExifTags.TAGS[k]: v for k, v in img._getexif().items() if k in ExifTags.TAGS } # pylint: disable=protected-access
+    mycontext = { **context, **scanner_context,
+        'page_title': "Scanner Control",
+        'deviceid': deviceid,
+        'picture' : "/data/clinics/1/picture/lastpicture.jpg",
+        'exif': exif
+        }
+    #print(mycontext)
+    return render(request,'web/show_picture.html', mycontext)
+
+
+
 
 @login_required
 def show_pic(request):
@@ -133,6 +180,10 @@ def show_pic(request):
 
 
 ########################### old functions ##################################
+def web_help(request):
+    return render(request, 'web/help.html', CONTEXT)
+
+
 @login_required
 def scanner_list(request):
     context = init_session_context(request)
@@ -268,26 +319,6 @@ def control(request):
         'state' : "dummy",
         }
     return render(request,'web/control.html', mycontext)
-
-@login_required
-def show_picture(request):
-    """ Show the scanning results """
-    context = init_session_context(request)
-    deviceid = request.GET.get('deviceid')
-
-    pic_file = "data/clinics/1/picture/file.jpg"
-    img = Image.open(pic_file)
-    exif = { ExifTags.TAGS[k]: v for k, v in img._getexif().items() if k in ExifTags.TAGS } # pylint: disable=protected-access
-
-    print(context)
-    mycontext = { **context,
-        'page_title': "Scanner Control",
-        'deviceid': deviceid,
-        'picture' : "/data/clinics/1/picture/file.jpg",
-        'exif': exif
-        }
-    #print(mycontext)
-    return render(request,'web/show_picture.html', mycontext)
 
 def test(request):
     return HttpResponse("Hello, Django!")

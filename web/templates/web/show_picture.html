@@ -1,7 +1,6 @@
-{% extends "base.html" %}
+{% extends "web/base.html" %}
 
 {% load static %}
-
 {% block content %}
 <style>
     td {
@@ -9,32 +8,37 @@
         padding: 1px !important;
     }
 </style>
-<br>
+<form>
+    {% include "web/device_select.html" %}
+</form>
+
 <div class="row">
-<div class="col">
-    <p>Deviceid: {{ deviceid }}</p>
-    <img src="{{ picture }}" xheight="100" width="100%" alt="Picture" title="{{ picture }}" /><br>
-    <p style="font-size: 0.8em;">{{ picture }}</p>
-    <br>
-    <hr />
-    <br>
+    <div class="col">
+        <img src="{{ picture }}" xheight="100" width="100%" alt="Picture" title="{{ picture }}" /><br>
+        <p style="font-size: 0.8em;">{{ picture }}</p>
+        <br>
+        <br>
+    </div>
+
+    <div class="col">
+        <table class="table table-bordered table-dark table-sm">
+            {% for key, val in exif.items %}
+            <tr>
+                <td>{{ key }}</td>
+                <td> {{ val|safe }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+<div class="row">
     {% if deviceid %}
+    <a href="{{ scan_url}}/takepic" class="btn btn-primary">Click</a>
     <button type="submit" class="btn btn-lg btn-primary" name="control" value="picture">Take</button>
     <!-- <button type="submit" class="btn btn-lg btn-secondary" name="control" value="3dscan">3D Scan</button>
-    <button type="submit" class="btn btn-lg btn-warning" name="control" value="status">Status</button> -->
+<button type="submit" class="btn btn-lg btn-warning" name="control" value="status">Status</button> -->
     {% endif %}
-    <br>
-</div>
 
-<div class="col">
-    <table class="table table-bordered table-dark table-sm">
-    {% for key, val in exif.items %}
-    <tr><td>{{ key }}</td><td> {{ val|safe }}</td></tr>
-    {% endfor %}
-</table>
-</div>
-</div>
-<a href="{% url 'show_picture' %}">Back</a>
 </div>
 
 {% endblock %}
