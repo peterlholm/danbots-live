@@ -127,7 +127,8 @@ def show_picture(request):
     context = init_session_context(request)
     deviceid = request.GET.get('deviceid')
     scanner_context = get_scanner_context(request)
-    pic_file = "data/clinics/1/picture/picture1.jpg"
+    pic_file = "data/clinics/1/picture/lastpicture.jpg"
+    pic_file = "/var/www/danbots/live/data/clinics/1/picture/lastpicture.jpg"
     img = Image.open(pic_file)
     exif = { ExifTags.TAGS[k]: v for k, v in img._getexif().items() if k in ExifTags.TAGS } # pylint: disable=protected-access
     mycontext = { **context, **scanner_context,
@@ -147,7 +148,8 @@ def show_pic(request):
     context = init_session_context(request)
     clinic_no = request.session['clinic_no']
     clinic_path = Path(request.session['clinic_path'])
-    filefolder = clinic_path / "picture"
+    filefolder = clinic_path / "picture"            
+    os.makedirs(filefolder, exist_ok=True)
     url = CLINIC_URL + str(clinic_no) + "/picture/"
     pic=[]
     folder=[]

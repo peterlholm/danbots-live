@@ -11,7 +11,7 @@ rm -rf env
 python3 -m venv env
 . env/bin/activate
 
-pip install -r requirements.txt
+pip install -r requirements_prod.txt
 
 touch db.sqlite3
 chmod g+w db.sqlite3
