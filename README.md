@@ -7,14 +7,13 @@ demo.json:
 
 ## Users
 
- clinicadm1/Clin1111: a administrator at the clinic
+ clinicadm1/Clin1111: an administrator at the clinic
+ 
  dentist1/Dent1111: a dentist
 
 danbots/Danwand1: Django admin
+
 sysadm/Sysa1111: general system administration
-
-peter: superuser
-
 
 
 groups:
@@ -24,10 +23,4 @@ clinicadm: local administrators
 
 installation:
 
-1. make folder
-2. make venv
-3. clone project
-4. chown www-data
-5. chgrp peter db.sqlite3
-6. make migrations, migrate
-7. 
+look at doc/createwebsite.sh
