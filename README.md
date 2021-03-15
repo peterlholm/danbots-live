@@ -7,10 +7,11 @@ demo.json:
 
 ## Users
 
+ clinicadm1/Clin1111: a administrator at the clinic
+ dentist1/Dent1111: a dentist
+
 danbots/Danwand1: Django admin
 sysadm/Sysa1111: general system administration
-clinicadm1/Clin1111: a administrator at the clinic
-dentist1/Dent1111: a dentist
 
 peter: superuser
 
