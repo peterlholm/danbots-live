@@ -1,16 +1,41 @@
 [
     {"model": "common.clinic", "pk": 1, "fields": {"No": 1, "Name": "Demo Tandlægerne", "Logo": ""}},
     {"model": "common.clinic", "pk": 2, "fields": {"No": 2, "Name": "Søborg Tandlægerne", "Logo": ""}},
-
-    {"model": "common.scanner", "pk": 1, "fields": {"Serial": "000", "Clinic": "1", 
-        "LastRegister":"2000-01-01T08:08:08+01", "Charge":11, "Name":"Dummy", 
-        "LocalIp":"11.12.13.14", "RemoteIp":"11.12.13.14", "HWmodel": "0.0", "SWversion": "0.1"}
+ 
+    {
+        "model": "common.scanner",
+        "pk": 1,
+        "fields": {
+            "Serial": "000",
+            "Clinic": 1,
+            "LastRegister": "2000-01-01T07:08:08Z",
+            "Charge": 11,
+            "Name": "Dummy",
+            "LocalIp": "11.12.13.14",
+            "RemoteIp": "11.12.13.14",
+            "HWmodel": "0.0",
+            "SWversion": "0.1",
+            "State": null,
+            "CommandMode": null
+        }
     },
-    {"model": "common.scanner", "pk": 2, "fields": {"Serial": "001", "Clinic": "1", 
-        "LastRegister":"2000-01-01T08:08:09+01", "Charge":11, "Name":"Dummy", 
-        "LocalIp":"111.112.113.114", "RemoteIp":"211.212.213.214", "HWmodel": "0.0", "SWversion": "0.1"}
+    {
+        "model": "common.scanner",
+        "pk": 2,
+        "fields": {
+            "Serial": "001",
+            "Clinic": 2,
+            "LastRegister": "2000-01-01T07:08:09Z",
+            "Charge": 11,
+            "Name": "Scanner i Søborg",
+            "LocalIp": "111.112.113.114",
+            "RemoteIp": "211.212.213.214",
+            "HWmodel": "0.0",
+            "SWversion": "0.1",
+            "State": null,
+            "CommandMode": null
+        }
     },
-    
     {
         "model": "auth.group",
         "pk": 1,
@@ -76,7 +101,7 @@
         "model": "auth.user",
         "pk": 12,
         "fields": {
-            "password": "pbkdf2_sha256$216000$Xx0L9hLPGh9x$d4ucFjl3wAYL+SVX9+unBK2WR+3PgiRBJKjZDVcoxLs=",
+            "password": "pbkdf2_sha256$216000$ZragGM3KDsdB$+djhkWrJDGCTuQY6rToecgrWj6XxAR5pwJ94eqXILLk=",
             "last_login": null,
             "is_superuser": false,
             "username": "clinicadm1",
@@ -95,7 +120,7 @@
         "model": "auth.user",
         "pk": 13,
         "fields": {
-            "password": "pbkdf2_sha256$216000$Xx0L9hLPGh9x$d4ucFjl3wAYL+SVX9+unBK2WR+3PgiRBJKjZDVcoxLs=",
+            "password": "pbkdf2_sha256$216000$a2dQUqrfoKby$hX8ItLu758XZE+yADorXeXpkxk1AS06dHeYdmWj5D9A=",
             "last_login": null,
             "is_superuser": false,
             "username": "dentist1",
@@ -109,7 +134,6 @@
             "user_permissions": []
         }
     },
-
 
     {"model": "common.user2clinic", "pk": 2, "fields": {"user": 13, "clinic": 2}},
     {
@@ -126,24 +150,6 @@
             "is_staff": true,
             "is_active": true,
             "date_joined": "2020-09-21T09:51:10Z",
-            "groups": [],
-            "user_permissions": []
-        }
-    },
-    {
-        "model": "auth.user",
-        "pk": 5,
-        "fields": {
-            "password": "pbkdf2_sha256$216000$Xccaorsbb7M5$05IjWAV9YEZfrEmcj80x1+usj6e5KBo8kRlHX+C0J7o=",
-            "last_login": null,
-            "is_superuser": true,
-            "username": "samir",
-            "first_name": "Samir",
-            "last_name": "Lehaff",
-            "email": "samir@lehaff.dk",
-            "is_staff": false,
-            "is_active": true,
-            "date_joined": "2021-03-01T19:33:25Z",
             "groups": [],
             "user_permissions": []
         }

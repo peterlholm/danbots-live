@@ -1,3 +1,4 @@
+pip>20
 Django>=3.1.1
 django-crispy-forms
 Pillow
@@ -17,7 +18,6 @@ imutils
 #opencv-contrib-python
 
 # server
-pip>=19.3
 opencv-python-headless
 # opencv-contrib-python-headless
 #pygraphviz

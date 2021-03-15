@@ -25,7 +25,7 @@ SECRET_KEY = '$hf5#pl9huskznjgrt!$4+95!5ss1++9pk8kdq#@3vj1+6_nrb'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1','localhost','dxwin10.local', '192.168.0.100','live.danbots.com', 'live.danbots.net4us.dk', 'my.holmnet.dk']
+ALLOWED_HOSTS = ['127.0.0.1','localhost','dxwin10.local', '192.168.0.100','live.danbots.com', 'live.danbots.net4us.dk', 'devel.danbots.net4us.dk',  'devel2.danbots.net4us.dk','my.holmnet.dk']
 
 # Application definition
 
